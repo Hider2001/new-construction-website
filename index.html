@@ -210,74 +210,7 @@
                 <button class="projects__filter-btn" data-filter="infrastructure">بنية تحتية</button>
             </div>
             <div class="projects__grid">
-                <div class="projects__item" data-category="residential" data-modal="project1">
-                    <div class="projects__item-img">
-                        <img src="images/final_project1.png" alt="مجمع سكني الواحة" class="image-img">
-                    </div>
-                    <div class="projects__item-overlay">
-                        <h3 class="projects__item-title">مجمع سكني الواحة</h3>
-                        <span class="projects__item-category">سكني</span>
-                        <a href="#" class="projects__item-link">
-                            <i class="fas fa-arrow-left"></i>
-                            عرض التفاصيل
-                        </a>
-                    </div>
-                </div>
-                <div class="projects__item" data-category="commercial" data-modal="project2">
-                    <div class="projects__item-img"></div>
-                    <div class="projects__item-overlay">
-                        <h3 class="projects__item-title">برج الأعمال المركزي</h3>
-                        <span class="projects__item-category">تجاري</span>
-                        <a href="#" class="projects__item-link">
-                            <i class="fas fa-arrow-left"></i>
-                            عرض التفاصيل
-                        </a>
-                    </div>
-                </div>
-                <div class="projects__item" data-category="industrial" data-modal="project3">
-                    <div class="projects__item-img"></div>
-                    <div class="projects__item-overlay">
-                        <h3 class="projects__item-title">مصنع التقنية الحديثة</h3>
-                        <span class="projects__item-category">صناعي</span>
-                        <a href="#" class="projects__item-link">
-                            <i class="fas fa-arrow-left"></i>
-                            عرض التفاصيل
-                        </a>
-                    </div>
-                </div>
-                <div class="projects__item" data-category="infrastructure" data-modal="project4">
-                    <div class="projects__item-img"></div>
-                    <div class="projects__item-overlay">
-                        <h3 class="projects__item-title">جسر المستقبل</h3>
-                        <span class="projects__item-category">بنية تحتية</span>
-                        <a href="#" class="projects__item-link">
-                            <i class="fas fa-arrow-left"></i>
-                            عرض التفاصيل
-                        </a>
-                    </div>
-                </div>
-                <div class="projects__item" data-category="residential" data-modal="project5">
-                    <div class="projects__item-img"></div>
-                    <div class="projects__item-overlay">
-                        <h3 class="projects__item-title">فلل الزهور الفاخرة</h3>
-                        <span class="projects__item-category">سكني</span>
-                        <a href="#" class="projects__item-link">
-                            <i class="fas fa-arrow-left"></i>
-                            عرض التفاصيل
-                        </a>
-                    </div>
-                </div>
-                <div class="projects__item" data-category="commercial" data-modal="project6">
-                    <div class="projects__item-img"></div>
-                    <div class="projects__item-overlay">
-                        <h3 class="projects__item-title">مول الريان التجاري</h3>
-                        <span class="projects__item-category">تجاري</span>
-                        <a href="#" class="projects__item-link">
-                            <i class="fas fa-arrow-left"></i>
-                            عرض التفاصيل
-                        </a>
-                    </div>
-                </div>
+                <!-- Project items will be dynamically populated here -->
             </div>
         </div>
         
@@ -287,47 +220,45 @@
                 <button class="projects__modal-close">
                     <i class="fas fa-times"></i>
                 </button>
-                <div class="projects__modal-img"></div>
+                <div class="projects__modal-img">
+                    <img src="" alt="Project Image" id="modalMainImage" class="image-img">
+                </div>
                 <div class="projects__modal-body">
-                    <span class="projects__modal-category">سكني</span>
-                    <h3 class="projects__modal-title">مجمع سكني الواحة</h3>
-                    <p class="projects__modal-description">مشروع سكني متكامل يتكون من 50 فيلا فاخرة بتصاميم عصرية ومساحات خضراء واسعة، تم تنفيذه بأعلى معايير الجودة والاستدامة البيئية. يتميز المشروع بموقعه الاستراتيجي وتوفير جميع الخدمات والمرافق الضرورية للسكان.</p>
-                    
+                    <span class="projects__modal-category" id="modalCategory"></span>
+                    <h3 class="projects__modal-title" id="modalTitle"></h3>
+                    <p class="projects__modal-description" id="modalDescription"></p>
                     <div class="projects__modal-details">
                         <div class="projects__modal-detail">
                             <i class="fas fa-map-marker-alt projects__modal-detail-icon"></i>
                             <div>
                                 <span class="projects__modal-detail-title">الموقع</span>
-                                مدينة الرياض - حي الياسمين
+                                <span id="modalLocation"></span>
                             </div>
                         </div>
                         <div class="projects__modal-detail">
                             <i class="fas fa-calendar-alt projects__modal-detail-icon"></i>
                             <div>
                                 <span class="projects__modal-detail-title">تاريخ الإنجاز</span>
-                                يناير 2023
+                                <span id="modalDate"></span>
                             </div>
                         </div>
                         <div class="projects__modal-detail">
                             <i class="fas fa-ruler-combined projects__modal-detail-icon"></i>
                             <div>
                                 <span class="projects__modal-detail-title">المساحة</span>
-                                25,000 متر مربع
+                                <span id="modalArea"></span>
                             </div>
                         </div>
                         <div class="projects__modal-detail">
                             <i class="fas fa-user-tie projects__modal-detail-icon"></i>
                             <div>
                                 <span class="projects__modal-detail-title">العميل</span>
-                                شركة الأصالة للتطوير العقاري
+                                <span id="modalClient"></span>
                             </div>
                         </div>
                     </div>
-                    
                     <div class="projects__modal-gallery">
-                        <div class="projects__modal-gallery-item"></div>
-                        <div class="projects__modal-gallery-item"></div>
-                        <div class="projects__modal-gallery-item"></div>
+                        <!-- Gallery images will be dynamically populated here -->
                     </div>
                 </div>
             </div>

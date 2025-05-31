@@ -174,82 +174,200 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Projects Section
-const projectFilterBtns = document.querySelectorAll('.projects__filter-btn');
-const projectItems = document.querySelectorAll('.projects__item');
-const projectModal = document.getElementById('projectModal');
-const projectModalClose = document.querySelector('.projects__modal-close');
-const projectLinks = document.querySelectorAll('.projects__item-link');
+const projectData = {
+    project1: {
+        title: "مجمع سكني الواحة",
+        category: "سكني",
+        categoryEn: "residential",
+        description: "مشروع سكني متكامل يتكون من 50 فيلا فاخرة بتصاميم عصرية ومساحات خضراء واسعة.",
+        location: "مدينة الرياض - حي الياسمين",
+        date: "يناير 2023",
+        area: "25,000 متر مربع",
+        client: "شركة الأصالة للتطوير العقاري",
+        images: ["images/proj1.png", "images/proj1_4.png", "images/proj1_2.png"]
+    },
+    project2: {
+        title: "برج الأعمال المركزي",
+        category: "تجاري",
+        categoryEn: "commercial",
+        description: "برج تجاري حديث يوفر مساحات مكتبية وتجارية بموقع استراتيجي.",
+        location: "مدينة جدة - حي الشاطئ",
+        date: "مارس 2024",
+        area: "15,000 متر مربع",
+        client: "شركة الريادة العقارية",
+        images: ["images/proj2.png", "images/proj2_3.png", "images/proj2_2.png"]
+    },
+    project3: {
+        title: "مصنع الإنتاج المتطور",
+        category: "صناعي",
+        categoryEn: "industrial",
+        description: "مصنع حديث للإنتاج الصناعي مزود بأحدث التقنيات والمعدات.",
+        location: "مدينة الدمام - المنطقة الصناعية",
+        date: "سبتمبر 2023",
+        area: "30,000 متر مربع",
+        client: "الشركة السعودية للصناعات",
+        images: ["images/proj3.png", "images/proj3_4.png", "images/proj3_2.png"]
+    },
+    project4: {
+        title: "مول التسوق الكبير",
+        category: "تجاري",
+        categoryEn: "commercial",
+        description: "مركز تسوق ضخم يضم متاجر ومطاعم ومناطق ترفيهية.",
+        location: "مدينة الخبر - الكورنيش",
+        date: "ديسمبر 2023",
+        area: "40,000 متر مربع",
+        client: "مجموعة الشرق للاستثمار",
+        images: ["images/proj6.png", "images/proj6_3.png", "images/proj6_2.png"]
+    },
+    project5: {
+        title: "شبكة الطرق الحديثة",
+        category: "بنية تحتية",
+        categoryEn: "infrastructure",
+        description: "مشروع تطوير شبكة طرق حديثة وجسور لتحسين حركة المرور.",
+        location: "مدينة الطائف - المنطقة الشمالية",
+        date: "يونيو 2024",
+        area: "50,000 متر مربع",
+        client: "وزارة النقل والخدمات اللوجستية",
+        images: ["images/proj4.png", "images/proj4_3.png", "images/proj4_2.png"]
+    },
+    project6: {
+        title: "حي الأحلام السكني",
+        category: "سكني",
+        categoryEn: "residential",
+        description: "مجتمع سكني متكامل يضم شقق ومرافق ترفيهية وتعليمية.",
+        location: "مدينة مكة - حي العزيزية",
+        date: "أغسطس 2024",
+        area: "35,000 متر مربع",
+        client: "شركة الإسكان المتطور",
+        images: ["images/proj5.png", "images/proj5_3.png", "images/proj5_2.png"]
+    }
+};
 
-// Filter projects
-projectFilterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        // Activate current button
-        projectFilterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        
-        // Filter projects
-        const filterValue = btn.getAttribute('data-filter');
-        
-        projectItems.forEach(item => {
-            if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
-                item.style.display = 'block';
-                setTimeout(() => {
-                    item.style.opacity = '1';
-                    item.style.transform = 'translateY(0)';
-                }, 50);
-            } else {
-                item.style.opacity = '0';
-                item.style.transform = 'translateY(20px)';
-                setTimeout(() => {
-                    item.style.display = 'none';
-                }, 300);
-            }
+function populateProjects() {
+    const projectGrid = document.querySelector('.projects__grid');
+    if (!projectGrid) return;
+
+    projectGrid.innerHTML = '';
+
+    Object.keys(projectData).forEach((projectId) => {
+        const project = projectData[projectId];
+        const projectItem = document.createElement('div');
+        projectItem.className = 'projects__item';
+        projectItem.setAttribute('data-category', project.categoryEn);
+
+        projectItem.innerHTML = `
+            <div class="projects__item-img">
+                <img src="${project.images[0]}" alt="${project.title}" class="image-img" 
+                     onerror="this.src='images/placeholder.jpg'">
+            </div>
+            <div class="projects__item-overlay">
+                <h3 class="projects__item-title">${project.title}</h3>
+                <span class="projects__item-category">${project.category}</span>
+                <a href="#" class="projects__item-link" onclick="event.preventDefault(); openProjectModal('${projectId}')">
+                    <i class="fas fa-arrow-left"></i>
+                    عرض التفاصيل
+                </a>
+            </div>
+        `;
+
+        projectGrid.appendChild(projectItem);
+    });
+
+    initializeFilters();
+}
+
+function initializeFilters() {
+    const projectFilterBtns = document.querySelectorAll('.projects__filter-btn');
+    const projectItems = document.querySelectorAll('.projects__item');
+
+    projectFilterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            projectFilterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filterValue = btn.getAttribute('data-filter');
+
+            projectItems.forEach(item => {
+                const itemCategory = item.getAttribute('data-category');
+                item.style.display = (filterValue === 'all' || itemCategory === filterValue) ? 'block' : 'none';
+            });
         });
     });
-});
+}
 
-// Modal functionality
-if (projectLinks.length > 0 && projectModal) {
-    projectLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const projectItem = this.closest('.projects__item');
-            if (!projectItem) return;
-            
-            const modalTitle = document.querySelector('.projects__modal-title');
-            const modalCategory = document.querySelector('.projects__modal-category');
-            
-            if (modalTitle && modalCategory) {
-                const itemTitle = projectItem.querySelector('.projects__item-title');
-                const itemCategory = projectItem.querySelector('.projects__item-category');
-                
-                if (itemTitle) modalTitle.textContent = itemTitle.textContent;
-                if (itemCategory) modalCategory.textContent = itemCategory.textContent;
-            }
-            
-            // Show modal
-            projectModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-    });
+function openProjectModal(projectId) {
+    const modal = document.getElementById('projectModal');
+    const data = projectData[projectId];
 
-    // Close modal
+    if (!data) return;
+
+    document.getElementById('modalTitle').textContent = data.title;
+    document.getElementById('modalCategory').textContent = data.category;
+    document.getElementById('modalDescription').textContent = data.description;
+    document.getElementById('modalLocation').textContent = data.location;
+    document.getElementById('modalDate').textContent = data.date;
+    document.getElementById('modalArea').textContent = data.area;
+    document.getElementById('modalClient').textContent = data.client;
+
+    const mainImage = document.getElementById('modalMainImage');
+    mainImage.src = data.images[0];
+
+    const gallery = document.querySelector('.projects__modal-gallery');
+    gallery.innerHTML = data.images
+        .map((img) =>
+            `<div class="projects__modal-gallery-item">
+                <img src="${img}" alt="Gallery Image" class="image-img" 
+                     onclick="updateModalImage('${img}')"
+                     onerror="this.src='images/placeholder.jpg'">
+            </div>`
+        )
+        .join('');
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function updateModalImage(imageSrc) {
+    const mainImage = document.getElementById('modalMainImage');
+    if (mainImage) mainImage.src = imageSrc;
+}
+
+function initializeModal() {
+    const projectModalClose = document.querySelector('.projects__modal-close');
+    const modal = document.getElementById('projectModal');
+
     if (projectModalClose) {
         projectModalClose.addEventListener('click', () => {
-            projectModal.classList.remove('active');
-            document.body.style.overflow = 'auto';
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
         });
     }
 
-    // Close modal when clicking outside content
-    projectModal.addEventListener('click', function(e) {
-        if (e.target === this) {
-            this.classList.remove('active');
-            document.body.style.overflow = 'auto';
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
         }
     });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    populateProjects();
+    initializeModal();
+});
+
+if (document.readyState !== 'loading') {
+    populateProjects();
+    initializeModal();
 }
 
 // Testimonials Slider
